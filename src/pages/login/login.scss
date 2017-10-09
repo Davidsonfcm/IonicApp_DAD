@@ -1,0 +1,17 @@
+page-login { 
+    .scroll-content{
+        background-image: url('../img/background.jpeg');
+        overflow: hidden;  
+    }
+    .vertical-align-content > *
+    {
+        display: flex!important;
+        align-content: center!important;
+        align-items: center!important;
+    }
+    ion-icon {
+        color: #A29A9A;
+        font-size: 40px; //Preferred size here
+        background-color: white;
+    }
+}
