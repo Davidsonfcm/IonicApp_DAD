@@ -10,6 +10,7 @@ Após ir até o caminho da aplicação pelo prompt seguir a ordem de comandos a 
 
 ```bash
 $ npm install
+$ npm install angular2-recaptcha
 $ ionic serve --lab
 ```
 
