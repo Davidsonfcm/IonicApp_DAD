@@ -25532,7 +25532,11 @@ page-login .vertical-align-content > * {
 }
 
 page-login ion-icon {
-  color: #A29A9A;
+  color: white;
   font-size: 40px;
-  background-color: white;
+}
+
+page-login a {
+  color: white;
+  float: right;
 }

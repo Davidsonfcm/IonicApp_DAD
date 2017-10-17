@@ -11,6 +11,7 @@ import { LoginService } from "./login.service";
 export class LoginPage {
     @ViewChild(ReCaptchaComponent) captcha: ReCaptchaComponent;
 
+    cpf: string;
     user: string;
     password: string;
     authorized: boolean;
@@ -23,7 +24,7 @@ export class LoginPage {
     }
 
     signIn(): void {
-        this.loginService.validateLogin(this.user, this.password)
+        this.loginService.validateLogin(this.cpf, this.password)
             .subscribe(login => this.authorized = (login != null ? true : false),
             error => this.errorMessage = <any>error);
 
@@ -46,8 +47,5 @@ export class LoginPage {
         }
     }
 
-    showAlert(_title: string, _message: string): void {
-
-    }
 }
 

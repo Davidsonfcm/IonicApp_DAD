@@ -1,9 +1,11 @@
 [
     { 
+        "cpf": "09492790645",        
         "user" : "Davidson",
         "password": "123456"
     },
     {
+        "cpf": "40696726807",
         "user": "Pedro",
         "password": "123"
     }

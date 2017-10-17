@@ -10,8 +10,11 @@ page-login {
         align-items: center!important;
     }
     ion-icon {
-        color: #A29A9A;
+        color: white;
         font-size: 40px; //Preferred size here
-        background-color: white;
+    }
+    a {
+        color: white;
+        float: right;
     }
 }

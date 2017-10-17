@@ -15,10 +15,10 @@ export class LoginService {
     constructor(private _http: Http) {
     }
 
-    validateLogin(_user: string, _password: string): Observable<ILogin> {
+    validateLogin(_cpf: string, _password: string): Observable<ILogin> {
         return this._http.get(this._loginUrl)        
         .map((response: Response)  => <ILogin>response.json()
-        .filter(<ILogin>(x) => x.user == _user && x.password == _password))
+        .filter(<ILogin>(x) => x.cpf == _cpf && x.password == _password))
         .do(data => console.log('All:' + JSON.stringify(data)))
         .catch(this.handleError);
     }
