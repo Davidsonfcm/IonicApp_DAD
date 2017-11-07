@@ -1,5 +1,8 @@
 export interface ILogin {
+    codigo: number;
+    nome: string;
     cpf: string;
-    user: string;
+    nascimento: Date;
+    tipo: string;
     password: string;
 }

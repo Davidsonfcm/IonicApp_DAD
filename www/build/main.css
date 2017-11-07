@@ -25536,7 +25536,17 @@ page-login ion-icon {
   font-size: 40px;
 }
 
-page-login a {
+page-login .registrationLink {
+  color: white;
+  float: left !important;
+}
+
+page-login .rememberUser {
   color: white;
   float: right;
+}
+
+page-login .my-select {
+  max-width: 100%;
+  padding: 0px;
 }

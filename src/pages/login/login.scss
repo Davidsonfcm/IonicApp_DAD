@@ -14,7 +14,19 @@ page-login {
         font-size: 40px; //Preferred size here
     }
     a {
+       
+    }
+    .registrationLink{
+        color: white;
+        float: left !important;
+    }
+    .rememberUser{
         color: white;
         float: right;
     }
+    .my-select {
+        max-width: 100%;
+        padding: 0px;
+    }
+   
 }

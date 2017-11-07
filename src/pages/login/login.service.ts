@@ -10,15 +10,15 @@ import { ILogin } from "./ILogin";
 @Injectable()
 export class LoginService {
 
-    private _loginUrl: string = "http://localhost:8100/data/login.json";
+    private _loginUrl: string = "http://tesi.local/api/Users";
 
     constructor(private _http: Http) {
     }
 
-    validateLogin(_cpf: string, _password: string): Observable<ILogin> {
-        return this._http.get(this._loginUrl)        
-        .map((response: Response)  => <ILogin>response.json()
-        .filter(<ILogin>(x) => x.cpf == _cpf && x.password == _password))
+    validateLogin(_cpf: string, _password: string, _type: string): Observable<ILogin> {
+        return this._http.get(this._loginUrl+'/'+_cpf+'/'+_password+'/'+_type)        
+        .map((response: Response)  => <ILogin>response.json())
+        //.filter(<ILogin>(x) => x.cpf == _cpf && x.password == _password))
         .do(data => console.log('All:' + JSON.stringify(data)))
         .catch(this.handleError);
     }
