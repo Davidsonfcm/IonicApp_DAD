@@ -21,19 +21,6 @@
             </ion-col>
         </ion-row>
         <ion-row>
-            <ion-col col-10>
-                <ion-item>
-                    <ion-select [(ngModel)]="userType" class="my-select">
-                        <ion-option value="G">Gestor</ion-option>
-                        <ion-option value="A" selected>Associado</ion-option>
-                    </ion-select>
-                </ion-item>
-            </ion-col>
-            <ion-col col-2>
-                <ion-icon name="people"></ion-icon>
-            </ion-col>
-        </ion-row>
-        <ion-row>
             <ion-col col-12>
                 <re-captcha (captchaResponse)="handleCorrectCaptcha($event)" site_key="6LckFDMUAAAAAH28cebkT3kbyGWgLmez06Q_d1HF"></re-captcha>
             </ion-col>
@@ -47,10 +34,10 @@
         </ion-row>
         <ion-row>
             <ion-col col-6>
-                <a href="#" class="registrationLink">Cadastre-se</a>
+                <a href="#" class="registrationLink" (click)="pushPage('register');">Cadastre-se</a>
             </ion-col>
             <ion-col col-6>
-                <a href="#" class="rememberUser">Esqueci minha senha!</a>
+                <a href="#" class="rememberUser" (click)="rememberPassword();">Esqueci minha senha!</a>
             </ion-col>
         </ion-row>
 

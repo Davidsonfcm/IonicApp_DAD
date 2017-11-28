@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Cadastro</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="registerForm" (ngSubmit)="submit();">
+
+    <ion-input type="hidden" formControlName="tipo" [(ngModel)]="tipo"></ion-input>
+
+    <ion-list>
+      <ion-item>
+        <ion-label floating>CPF</ion-label>
+        <ion-input type="text" formControlName="cpf" [(ngModel)]="cpf"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Nome</ion-label>
+        <ion-input type="text" value="" formControlName="nome" [(ngModel)]="nome"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="text" formControlName="email" [(ngModel)]="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Senha</ion-label>
+        <ion-input type="password" formControlName="senha" [(ngModel)]="senha"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <button ion-button full default type="submit" [disabled]="!registerForm.valid">Salvar</button>
+        <button ion-button full default (click)="clean()">Limpar</button>
+      </ion-item>
+
+    </ion-list>
+  </form>
+
+</ion-content>

@@ -8,17 +8,21 @@ import { TrabalhoSDApp } from './app.component';
 import { LoginPage } from "../pages/login/login";
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { UserRegisterPage } from '../pages/userRegister/userRegister';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { LoginService } from "../pages/login/login.service";
+import { UsuarioService } from '../providers/usuario.service';
+
+
 
 @NgModule({
   declarations: [
     TrabalhoSDApp,
     LoginPage,
     HomePage,
-    ListPage
+    ListPage,
+    UserRegisterPage
   ],
   imports: [
     BrowserModule,
@@ -31,13 +35,14 @@ import { LoginService } from "../pages/login/login.service";
     TrabalhoSDApp,
     LoginPage,
     HomePage,
-    ListPage
+    ListPage,
+    UserRegisterPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    LoginService
+    UsuarioService
   ]
 })
 export class AppModule {}
