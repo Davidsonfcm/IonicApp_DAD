@@ -14,3 +14,14 @@ $ npm install angular2-recaptcha
 $ ionic serve --lab
 ```
 
+### Recursos desenvolvidos:
+
+Abaixo estão os recursos que foram desenvolvidos até então.
+
+```bash
+1 - Login completo com recaptcha
+2 - Cadastro completo com edição
+3 - Lembrete de senha via email
+4 - Tela inicial
+```
+
