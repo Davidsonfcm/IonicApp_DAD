@@ -603,6 +603,7 @@ TrabalhoSDApp = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_usuario_service__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__userRegister_userRegister__ = __webpack_require__(202);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -615,24 +616,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var HomePage = (function () {
     function HomePage(navCtrl, navParams, usuarioService) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.usuarioService = usuarioService;
-        var cpf = navParams.get("cpf");
-        this.usuarioService.search(cpf)
+        this.cpf = navParams.get("cpf");
+        this.usuarioService.search(this.cpf)
             .subscribe(function (result) {
             console.log(result);
             _this.userName = result.Contents.nome;
         });
     }
+    HomePage.prototype.openPage = function (page) {
+        switch (page) {
+            case 'UserRegisterPage':
+                this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__userRegister_userRegister__["a" /* UserRegisterPage */], { cpf: this.cpf });
+                break;
+        }
+    };
     return HomePage;
 }());
 HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-home',template:/*ion-inline-start:"C:\Users\Davidson\dev\GIT\IonicApp_DAD\src\pages\home\home.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Inicio</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <h3>Sistema Básico de Gestão</h3>\n\n\n\n  <p>\n\n    <b>{{userName}}</b> ,Seja Bem Vindo ao sistema básico de gestão, \n\n    através deste aplicativo você tera acessos a todos os recursos na palma de sua mão.\n\n    <br/><br/>\n\n    Em caso de dúvidas envie uma mensagem para testedad39@gmail.com.\n\n  </p>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Davidson\dev\GIT\IonicApp_DAD\src\pages\home\home.html"*/
+        selector: 'page-home',template:/*ion-inline-start:"C:\Users\Davidson\dev\GIT\IonicApp_DAD\src\pages\home\home.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Inicio</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n  <ion-fab top right edge (click)="openPage(\'UserRegisterPage\');">\n\n    <button ion-fab mini>\n\n      <ion-icon name="contact"></ion-icon>\n\n    </button>\n\n  </ion-fab>\n\n\n\n  <h3>Sistema Básico de Gestão</h3>\n\n\n\n  <p>\n\n    <b>{{userName}}</b> ,Seja Bem Vindo ao sistema básico de gestão, através deste aplicativo você tera acessos a todos os recursos\n\n    na palma de sua mão.\n\n    <br/>\n\n    <br/> Em caso de dúvidas envie uma mensagem para testedad39@gmail.com.\n\n  </p>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\Davidson\dev\GIT\IonicApp_DAD\src\pages\home\home.html"*/
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_usuario_service__["a" /* UsuarioService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_usuario_service__["a" /* UsuarioService */]) === "function" && _c || Object])
 ], HomePage);

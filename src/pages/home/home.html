@@ -8,13 +8,20 @@
 </ion-header>
 
 <ion-content padding>
+
+  <ion-fab top right edge (click)="openPage('UserRegisterPage');">
+    <button ion-fab mini>
+      <ion-icon name="contact"></ion-icon>
+    </button>
+  </ion-fab>
+
   <h3>Sistema Básico de Gestão</h3>
 
   <p>
-    <b>{{userName}}</b> ,Seja Bem Vindo ao sistema básico de gestão, 
-    através deste aplicativo você tera acessos a todos os recursos na palma de sua mão.
-    <br/><br/>
-    Em caso de dúvidas envie uma mensagem para testedad39@gmail.com.
+    <b>{{userName}}</b> ,Seja Bem Vindo ao sistema básico de gestão, através deste aplicativo você tera acessos a todos os recursos
+    na palma de sua mão.
+    <br/>
+    <br/> Em caso de dúvidas envie uma mensagem para testedad39@gmail.com.
   </p>
 
 </ion-content>
