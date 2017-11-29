@@ -10,7 +10,7 @@ import { IUsuario } from '../../contracts/IUsuario';
     templateUrl: 'userRegister.html',
 })
 export class UserRegisterPage implements IUsuario {
-    cpf: string;
+    cpf: string = "";
     nome: string;
     email: string;
     senha: string;

@@ -36,7 +36,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var UsuarioService = (function () {
     function UsuarioService(_http) {
         this._http = _http;
-        this._loginUrl = "http://www.dad.com.br/Api/Usuario";
+        this._loginUrl = "http://www.dad.com.br/Api/V1/Usuario";
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
         headers.append('Content-Type', 'application/json');
         headers.append('Access-Control-Allow-Origin', '*');
@@ -48,32 +48,32 @@ var UsuarioService = (function () {
             cpf: _cpf,
             senha: _password
         };
-        return this._http.post(this._loginUrl + '/Authenticate', JSON.stringify(body), this._options)
+        return this._http.post(this._loginUrl + '/Autenticar', JSON.stringify(body), this._options)
             .map(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     //Cadastra usuario
     UsuarioService.prototype.register = function (usuario) {
-        return this._http.post(this._loginUrl + '/Register', JSON.stringify(usuario), this._options)
+        return this._http.post(this._loginUrl + '/Registrar', JSON.stringify(usuario), this._options)
             .map(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     //edita usuario
     UsuarioService.prototype.edit = function (usuario) {
         console.log(usuario);
-        return this._http.put(this._loginUrl + '/Edit', JSON.stringify(usuario), this._options)
+        return this._http.put(this._loginUrl + '/Editar', JSON.stringify(usuario), this._options)
             .map(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     //busca o usuario pelo cpf
     UsuarioService.prototype.search = function (cpf) {
-        return this._http.get(this._loginUrl + '/Filter/' + cpf, this._options)
+        return this._http.get(this._loginUrl + '/Filtrar/' + cpf, this._options)
             .map(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     //Executa o envio de email da senha
     UsuarioService.prototype.rememberPassword = function (cpf) {
-        return this._http.get(this._loginUrl + '/RememberPassword/' + cpf, this._options)
+        return this._http.get(this._loginUrl + '/LembrarSenha/' + cpf, this._options)
             .map(function (response) { return response.json(); })
             .catch(this.handleError);
     };
@@ -86,9 +86,10 @@ var UsuarioService = (function () {
 }());
 UsuarioService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
 ], UsuarioService);
 
+var _a;
 //# sourceMappingURL=usuario.service.js.map
 
 /***/ }),
@@ -343,11 +344,12 @@ var UserRegisterPage = (function () {
         this.usuarioService = usuarioService;
         this.alertController = alertController;
         this.menuController = menuController;
+        this.cpf = "";
         this.action = 'register';
         this.menuController.swipeEnable(false);
-        this.cpf = this.navParams.get("cpf");
         this.tipo = this.navParams.get("tipo");
-        if (this.cpf != "") {
+        if (this.navParams.get("cpf") !== undefined) {
+            this.cpf = this.navParams.get("cpf");
             this.action = 'edit';
             this.getUser(this.cpf);
         }
@@ -418,14 +420,10 @@ UserRegisterPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'page-userRegister',template:/*ion-inline-start:"C:\Users\Davidson\dev\GIT\IonicApp_DAD\src\pages\userRegister\userRegister.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>Cadastro</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <form [formGroup]="registerForm" (ngSubmit)="submit();">\n\n\n\n    <ion-input type="hidden" formControlName="tipo" [(ngModel)]="tipo"></ion-input>\n\n\n\n    <ion-list>\n\n      <ion-item>\n\n        <ion-label floating>CPF</ion-label>\n\n        <ion-input type="text" formControlName="cpf" [(ngModel)]="cpf"></ion-input>\n\n      </ion-item>\n\n\n\n      <ion-item>\n\n        <ion-label floating>Nome</ion-label>\n\n        <ion-input type="text" value="" formControlName="nome" [(ngModel)]="nome"></ion-input>\n\n      </ion-item>\n\n\n\n      <ion-item>\n\n        <ion-label floating>Email</ion-label>\n\n        <ion-input type="text" formControlName="email" [(ngModel)]="email"></ion-input>\n\n      </ion-item>\n\n\n\n      <ion-item>\n\n        <ion-label floating>Senha</ion-label>\n\n        <ion-input type="password" formControlName="senha" [(ngModel)]="senha"></ion-input>\n\n      </ion-item>\n\n\n\n      <ion-item>\n\n        <button ion-button full default type="submit" [disabled]="!registerForm.valid">Salvar</button>\n\n        <button ion-button full default (click)="clean()">Limpar</button>\n\n      </ion-item>\n\n\n\n    </ion-list>\n\n  </form>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\Davidson\dev\GIT\IonicApp_DAD\src\pages\userRegister\userRegister.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"],
-        __WEBPACK_IMPORTED_MODULE_3__providers_usuario_service__["a" /* UsuarioService */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* MenuController */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_usuario_service__["a" /* UsuarioService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_usuario_service__["a" /* UsuarioService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* MenuController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* MenuController */]) === "function" && _f || Object])
 ], UserRegisterPage);
 
+var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=userRegister.js.map
 
 /***/ }),

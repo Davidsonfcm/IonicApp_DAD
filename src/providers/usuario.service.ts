@@ -11,7 +11,7 @@ import { IUsuario } from "../contracts/IUsuario";
 @Injectable()
 export class UsuarioService {
 
-    private _loginUrl: string = "http://www.dad.com.br/Api/Usuario";
+    private _loginUrl: string = "http://www.dad.com.br/Api/V1/Usuario";
     private _options: RequestOptions;
 
     constructor(private _http: Http) {
@@ -28,7 +28,7 @@ export class UsuarioService {
             senha : _password  
         };
 
-        return this._http.post(this._loginUrl+'/Authenticate', JSON.stringify(body), this._options)      
+        return this._http.post(this._loginUrl+'/Autenticar', JSON.stringify(body), this._options)      
         .map((response: Response)=> response.json())
         //.do(data => console.log('All:' + JSON.stringify(data)))
         .catch(this.handleError);
@@ -36,7 +36,7 @@ export class UsuarioService {
 
     //Cadastra usuario
     register(usuario: IUsuario): Observable<IResponseDTO> {
-        return this._http.post(this._loginUrl+'/Register', JSON.stringify(usuario), this._options)      
+        return this._http.post(this._loginUrl+'/Registrar', JSON.stringify(usuario), this._options)      
             .map((response: Response)=> response.json())
             .catch(this.handleError);
     }
@@ -44,21 +44,21 @@ export class UsuarioService {
     //edita usuario
     edit(usuario: IUsuario): Observable<IResponseDTO> {
         console.log(usuario);
-        return this._http.put(this._loginUrl +'/Edit' , JSON.stringify(usuario), this._options)      
+        return this._http.put(this._loginUrl +'/Editar' , JSON.stringify(usuario), this._options)      
             .map((response: Response)=> response.json())
             .catch(this.handleError);
     }
 
     //busca o usuario pelo cpf
     search(cpf: string) : Observable<IResponseDTO> {
-        return this._http.get(this._loginUrl + '/Filter/' + cpf, this._options)      
+        return this._http.get(this._loginUrl + '/Filtrar/' + cpf, this._options)      
         .map((response: Response)=> response.json())
         .catch(this.handleError);
     }
 
     //Executa o envio de email da senha
     rememberPassword(cpf: string) : Observable<IResponseDTO> {
-        return this._http.get(this._loginUrl + '/RememberPassword/' + cpf, this._options)      
+        return this._http.get(this._loginUrl + '/LembrarSenha/' + cpf, this._options)      
         .map((response: Response)=> response.json())
         .catch(this.handleError);
     }
