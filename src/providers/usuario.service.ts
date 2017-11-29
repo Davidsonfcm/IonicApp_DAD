@@ -43,8 +43,7 @@ export class UsuarioService {
 
     //edita usuario
     edit(usuario: IUsuario): Observable<IResponseDTO> {
-        console.log(usuario);
-        return this._http.put(this._loginUrl +'/Editar' , JSON.stringify(usuario), this._options)      
+        return this._http.put(this._loginUrl +'/Editar/' + usuario.cpf , JSON.stringify(usuario), this._options)      
             .map((response: Response)=> response.json())
             .catch(this.handleError);
     }

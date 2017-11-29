@@ -1,10 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { ReCaptchaComponent } from 'angular2-recaptcha';
 import { NavController, AlertController, MenuController } from "ionic-angular";
-import { HomePage } from "../home/home";
-import { UsuarioService } from '../../providers/usuario.service';
+
 import { IResponseDTO } from '../../contracts/IResponseDTO';
+
 import { UserRegisterPage } from '../userRegister/userRegister';
+import { HomePage } from "../home/home";
+
+import { UsuarioService } from '../../providers/usuario.service';
+import { GlobalService } from '../../providers/global.service';
 
 @Component({
     selector: 'page-login',
@@ -19,15 +23,19 @@ export class LoginPage {
     password: string;
     buttonIsEnabled: boolean = false;
 
-    constructor(private nav: NavController,
-        private usuarioService: UsuarioService,
-        private alertController: AlertController,
-        private menuController: MenuController) {
+    constructor(public nav: NavController,
+        public globalService : GlobalService,
+        public usuarioService: UsuarioService,
+        public alertController: AlertController,
+        public menuController: MenuController) {
         this.menuController.swipeEnable(false);
     }
 
     //Efetua o login na página e válida
     signIn(): void {
+        //Mostra a imagem de carregamento
+        this.globalService.presentLoading();
+
         this.usuarioService.validateLogin(this.cpf, this.password)
             .subscribe((result: IResponseDTO) => {
                 this.responseData = result;
@@ -36,9 +44,13 @@ export class LoginPage {
             });
     }
 
-    //Chama a pagina home
+    //Cria as variaveis globais e chama a pagina home
     validateResponse(): void {
         if (this.responseData.Success == true) {
+            this.globalService.loginCpf = this.cpf;
+            this.globalService.loginNome = this.responseData.Contents.nome;
+            this.globalService.loginTipo = this.responseData.Contents.tipo;
+
             this.nav.setRoot(HomePage, { cpf: this.cpf });
         }
         else {

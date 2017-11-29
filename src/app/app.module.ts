@@ -12,9 +12,9 @@ import { UserRegisterPage } from '../pages/userRegister/userRegister';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+
 import { UsuarioService } from '../providers/usuario.service';
-
-
+import { GlobalService } from '../providers/global.service';
 
 @NgModule({
   declarations: [
@@ -42,6 +42,7 @@ import { UsuarioService } from '../providers/usuario.service';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    GlobalService,
     UsuarioService
   ]
 })

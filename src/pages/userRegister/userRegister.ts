@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, MenuController, NavParams } from "ionic-angular";
-import { IResponseDTO } from '../../contracts/IResponseDTO';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
-import { UsuarioService } from '../../providers/usuario.service';
+
+import { IResponseDTO } from '../../contracts/IResponseDTO';
 import { IUsuario } from '../../contracts/IUsuario';
+
+import { UsuarioService } from '../../providers/usuario.service';
+import { GlobalService } from '../../providers/global.service';
 
 @Component({
     selector: 'page-userRegister',
@@ -21,6 +24,7 @@ export class UserRegisterPage implements IUsuario {
     action: string = 'register';
 
     constructor(private nav: NavController,
+        public globalService : GlobalService,
         public navParams: NavParams,
         private formBuilder: FormBuilder,
         private usuarioService: UsuarioService,

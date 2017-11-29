@@ -3,25 +3,20 @@ import { NavController, NavParams } from 'ionic-angular';
 import { UsuarioService } from '../../providers/usuario.service';
 import { IResponseDTO } from '../../contracts/IResponseDTO';
 import { UserRegisterPage } from '../userRegister/userRegister';
+import { GlobalService } from '../../providers/global.service';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  cpf : string;
   userName : string;
 
   constructor(public navCtrl: NavController,
+    public globalService: GlobalService,
     public navParams : NavParams,
     public usuarioService : UsuarioService) {
-      this.cpf = navParams.get("cpf");
-
-      this.usuarioService.search(this.cpf)
-      .subscribe((result: IResponseDTO) => {
-        console.log(result);
-          this.userName = result.Contents.nome;
-      });
+      this.userName = this.globalService.loginNome;
   }
 
   openPage(page: string): void
