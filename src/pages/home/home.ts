@@ -24,7 +24,7 @@ export class HomePage {
     switch(page)
     {
       case 'UserRegisterPage':
-        this.navCtrl.push(UserRegisterPage, { cpf : this.cpf });
+        this.navCtrl.push(UserRegisterPage, { cpf : this.globalService.loginCpf });
         break;
     }
   }
