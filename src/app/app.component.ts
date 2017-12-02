@@ -8,6 +8,9 @@ import { IPagesMenu } from '../contracts/IPagesMenu';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from "../pages/login/login";
+import { SchedulingPage } from '../pages/scheduling/scheduling';
+import { UserRegisterPage } from '../pages/userRegister/userRegister';
+import { CallPage } from '../pages/call/call';
 
 import { GlobalService } from '../providers/global.service';
 
@@ -30,10 +33,9 @@ export class TrabalhoSDApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Inicio', component: HomePage, userTypeAuthorized: 'Associado|Gestor|Master' },
-      { title: 'Agenda', component: ListPage, userTypeAuthorized: 'Associado|Gestor|Master' },
-      { title: 'Diagnósticos', component: ListPage, userTypeAuthorized: 'Gestor|Master' },
-      { title: 'Consultas', component: ListPage, userTypeAuthorized: 'Gestor|Associado|Master' },
-      { title: 'Cadastro Gestor', component: ListPage, userTypeAuthorized: 'Master' },
+      { title: 'Agendamento', component: SchedulingPage, userTypeAuthorized: 'Associado' },
+      { title: 'Antedimentos', component: CallPage, userTypeAuthorized: 'Gestor|Associado|Master' },
+      { title: 'Cadastro Gestor', component: UserRegisterPage, userTypeAuthorized: 'Master' },
       { title: 'Sair', component: LoginPage, userTypeAuthorized: 'Associado|Gestor|Master' }
     ];
   }
@@ -74,6 +76,6 @@ export class TrabalhoSDApp {
       this.globalService.loginTipo = "";
     }
 
-    this.nav.setRoot(page.component);
+    this.nav.push(page.component);
   }
 }

@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Consultas Pendentes</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item *ngFor="let call of calls">
+      <h2>{{call.proprietario}}</h2>({{call.animal}})
+      <p>{{call.data}}</p>
+      <button ion-button clear item-end (click)="openConsult(call.identificador)"> Atender </button>
+    </ion-item>
+  </ion-list>
+  
+</ion-content>

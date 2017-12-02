@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Agendamento</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="schedulingForm" (ngSubmit)="submit();">
+
+    <ion-input type="hidden" formControlName="identificador" [(ngModel)]="identificador" value="0"></ion-input>
+    <ion-input type="hidden" formControlName="usuarioCpf" [(ngModel)]="usuarioCpf"></ion-input>
+
+    <ion-list>
+
+      <ion-item>
+            <ion-label> Proprietário: {{proprietario}} </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Animal</ion-label>
+        <ion-input type="text" [disabled]="disableScheduling"
+          formControlName="animal" [(ngModel)]="animal"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Data</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY HH:MM" [disabled]="disableScheduling"
+          formControlName="data" min="2017" max="2019-01-01" [(ngModel)]="data"></ion-datetime>
+      </ion-item>
+
+      <ion-item *ngIf="visibleDiagnostic">
+        <ion-label floating>Diagnóstico</ion-label>
+        <ion-input type="text"
+        formControlName="diagnostico" [(ngModel)]="diagnostico"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <button ion-button full default type="submit" [disabled]="!schedulingForm.valid">Salvar</button>        
+        <button ion-button full default (click)="cleanForm()">Limpar</button>
+      </ion-item>
+
+    </ion-list>
+  </form>
+
+</ion-content>

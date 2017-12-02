@@ -9,12 +9,16 @@ import { LoginPage } from "../pages/login/login";
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { UserRegisterPage } from '../pages/userRegister/userRegister';
+import { SchedulingPage } from '../pages/scheduling/scheduling';
+import { CallPage } from '../pages/call/call';
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { UsuarioService } from '../providers/usuario.service';
 import { GlobalService } from '../providers/global.service';
+import { SchedulingService } from '../providers/scheduling.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,9 @@ import { GlobalService } from '../providers/global.service';
     LoginPage,
     HomePage,
     ListPage,
-    UserRegisterPage
+    UserRegisterPage,
+    SchedulingPage,
+    CallPage
   ],
   imports: [
     BrowserModule,
@@ -36,14 +42,17 @@ import { GlobalService } from '../providers/global.service';
     LoginPage,
     HomePage,
     ListPage,
-    UserRegisterPage
+    UserRegisterPage,
+    SchedulingPage,
+    CallPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     GlobalService,
-    UsuarioService
+    UsuarioService,
+    SchedulingService
   ]
 })
 export class AppModule {}
