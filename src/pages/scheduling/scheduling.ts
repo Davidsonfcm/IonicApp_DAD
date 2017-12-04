@@ -37,16 +37,22 @@ export class SchedulingPage implements IScheduling {
     public schedulingService: SchedulingService) {
     this.usuarioCpf = this.globalServices.loginCpf;
     this.proprietario = this.globalServices.loginNome;
-debugger;
+
     if(this.navParams.get('id') !== undefined)
     {
-      this.schedulingService.search(this.navParams.get('id').value)
+      this.schedulingService.search(this.navParams.get('id'))
       .subscribe((response : IResponseDTO)=> {
-        this.identificador = response.Contents.identificador;
-        this.usuarioCpf = response.Contents.usuarioCpf;
-        this.data = response.Contents.data;
-        this.animal = response.Contents.animal;
-        this.diagnostico = response.Contents.diagnostico;
+        this.identificador = response.Contents[0].identificador;
+        this.usuarioCpf = response.Contents[0].usuarioCpf;
+        this.data = response.Contents[0].data;
+        this.animal = response.Contents[0].animal;
+        this.diagnostico = response.Contents[0].diagnostico;
+
+        this.usuarioService.search(response.Contents[0].usuarioCpf)
+        .subscribe((response : IResponseDTO) => {
+            this.proprietario = response.Contents.nome;
+        });
+        
       });
     }
 
@@ -55,13 +61,7 @@ debugger;
       this.action = 'edit';
       this.disableScheduling = true;
       this.visibleDiagnostic = true;
-      this.usuarioService.search(this.usuarioCpf)
-      .subscribe((response : IResponseDTO) => {
-          this.proprietario = response.Contents.nome;
-      });
     }
-
-    
 
     this.schedulingForm = this.formBuilder.group({
       "identificador": [""],
@@ -79,11 +79,17 @@ debugger;
 
   //Salvar o formulário
   submit(): void {
+    if(this.action == 'edit')
+    {
+
+    }
+    else{
       this.schedulingService.register(this.schedulingForm.value)
-        .subscribe((result: IResponseDTO) => {
-          this.responseData = result;
-          this.message(result.Success, result.Message);
-        });
+      .subscribe((result: IResponseDTO) => {
+        this.responseData = result;
+        this.message(result.Success, result.Message);
+      });
+    }
   }
 
   //exibe o alerta para o cliente
@@ -91,7 +97,7 @@ debugger;
     let alert = this.alertController.create({
       title: 'Mensagem',
       subTitle: success == true
-        ? "Agendado com sucesso!"
+        ? "Registrado com sucesso!"
         : message,
       buttons: [{
         text: 'Yes',

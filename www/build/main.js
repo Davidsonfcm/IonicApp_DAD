@@ -96,25 +96,24 @@ var SchedulingPage = (function () {
         this.visibleDiagnostic = false;
         this.usuarioCpf = this.globalServices.loginCpf;
         this.proprietario = this.globalServices.loginNome;
-        debugger;
         if (this.navParams.get('id') !== undefined) {
-            this.schedulingService.search(this.navParams.get('id').value)
+            this.schedulingService.search(this.navParams.get('id'))
                 .subscribe(function (response) {
-                _this.identificador = response.Contents.identificador;
-                _this.usuarioCpf = response.Contents.usuarioCpf;
-                _this.data = response.Contents.data;
-                _this.animal = response.Contents.animal;
-                _this.diagnostico = response.Contents.diagnostico;
+                _this.identificador = response.Contents[0].identificador;
+                _this.usuarioCpf = response.Contents[0].usuarioCpf;
+                _this.data = response.Contents[0].data;
+                _this.animal = response.Contents[0].animal;
+                _this.diagnostico = response.Contents[0].diagnostico;
+                _this.usuarioService.search(response.Contents[0].usuarioCpf)
+                    .subscribe(function (response) {
+                    _this.proprietario = response.Contents.nome;
+                });
             });
         }
         if (this.globalServices.loginTipo == 'Gestor' || this.globalServices.loginTipo == 'Master') {
             this.action = 'edit';
             this.disableScheduling = true;
             this.visibleDiagnostic = true;
-            this.usuarioService.search(this.usuarioCpf)
-                .subscribe(function (response) {
-                _this.proprietario = response.Contents.nome;
-            });
         }
         this.schedulingForm = this.formBuilder.group({
             "identificador": [""],
@@ -131,11 +130,15 @@ var SchedulingPage = (function () {
     //Salvar o formulário
     SchedulingPage.prototype.submit = function () {
         var _this = this;
-        this.schedulingService.register(this.schedulingForm.value)
-            .subscribe(function (result) {
-            _this.responseData = result;
-            _this.message(result.Success, result.Message);
-        });
+        if (this.action == 'edit') {
+        }
+        else {
+            this.schedulingService.register(this.schedulingForm.value)
+                .subscribe(function (result) {
+                _this.responseData = result;
+                _this.message(result.Success, result.Message);
+            });
+        }
     };
     //exibe o alerta para o cliente
     SchedulingPage.prototype.message = function (success, message) {
@@ -143,7 +146,7 @@ var SchedulingPage = (function () {
         var alert = this.alertController.create({
             title: 'Mensagem',
             subTitle: success == true
-                ? "Agendado com sucesso!"
+                ? "Registrado com sucesso!"
                 : message,
             buttons: [{
                     text: 'Yes',
@@ -682,7 +685,7 @@ var TrabalhoSDApp = (function () {
         this.pages = [
             { title: 'Inicio', component: __WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */], userTypeAuthorized: 'Associado|Gestor|Master' },
             { title: 'Agendamento', component: __WEBPACK_IMPORTED_MODULE_6__pages_scheduling_scheduling__["a" /* SchedulingPage */], userTypeAuthorized: 'Associado' },
-            { title: 'Antedimentos', component: __WEBPACK_IMPORTED_MODULE_8__pages_call_call__["a" /* CallPage */], userTypeAuthorized: 'Gestor|Associado|Master' },
+            { title: 'Atendimentos', component: __WEBPACK_IMPORTED_MODULE_8__pages_call_call__["a" /* CallPage */], userTypeAuthorized: 'Gestor|Associado|Master' },
             { title: 'Cadastro Gestor', component: __WEBPACK_IMPORTED_MODULE_7__pages_userRegister_userRegister__["a" /* UserRegisterPage */], userTypeAuthorized: 'Master' },
             { title: 'Sair', component: __WEBPACK_IMPORTED_MODULE_5__pages_login_login__["a" /* LoginPage */], userTypeAuthorized: 'Associado|Gestor|Master' }
         ];
@@ -724,17 +727,15 @@ var TrabalhoSDApp = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Nav */]),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Nav */])
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Nav */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Nav */]) === "function" && _a || Object)
 ], TrabalhoSDApp.prototype, "nav", void 0);
 TrabalhoSDApp = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\Davidson\dev\GIT\IonicApp_DAD\src\app\app.html"*/'<ion-menu [content]="content">\n\n  <ion-header>\n\n    <ion-toolbar>\n\n      <ion-title>Menu</ion-title>\n\n    </ion-toolbar>\n\n  </ion-header>\n\n\n\n  <ion-content>\n\n    <ion-list>\n\n      <button menuClose ion-item *ngFor="let p of getMenuAuthorized()" (click)="openPage(p)">\n\n        {{p.title}}\n\n      </button>\n\n    </ion-list>\n\n  </ion-content>\n\n\n\n</ion-menu>\n\n\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"C:\Users\Davidson\dev\GIT\IonicApp_DAD\src\app\app.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */],
-        __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */],
-        __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
-        __WEBPACK_IMPORTED_MODULE_9__providers_global_service__["a" /* GlobalService */]])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_9__providers_global_service__["a" /* GlobalService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__providers_global_service__["a" /* GlobalService */]) === "function" && _e || Object])
 ], TrabalhoSDApp);
 
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),

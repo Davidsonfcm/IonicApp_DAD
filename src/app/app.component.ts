@@ -34,7 +34,7 @@ export class TrabalhoSDApp {
     this.pages = [
       { title: 'Inicio', component: HomePage, userTypeAuthorized: 'Associado|Gestor|Master' },
       { title: 'Agendamento', component: SchedulingPage, userTypeAuthorized: 'Associado' },
-      { title: 'Antedimentos', component: CallPage, userTypeAuthorized: 'Gestor|Associado|Master' },
+      { title: 'Atendimentos', component: CallPage, userTypeAuthorized: 'Gestor|Associado|Master' },
       { title: 'Cadastro Gestor', component: UserRegisterPage, userTypeAuthorized: 'Master' },
       { title: 'Sair', component: LoginPage, userTypeAuthorized: 'Associado|Gestor|Master' }
     ];
