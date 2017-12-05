@@ -93,10 +93,11 @@ var SchedulingPage = (function () {
         this.schedulingService = schedulingService;
         this.action = 'register';
         this.disableScheduling = false;
-        this.visibleDiagnostic = false;
+        this.disableDiagnostic = true;
         this.usuarioCpf = this.globalServices.loginCpf;
         this.proprietario = this.globalServices.loginNome;
         if (this.navParams.get('id') !== undefined) {
+            this.action = 'edit';
             this.schedulingService.search(this.navParams.get('id'))
                 .subscribe(function (response) {
                 _this.identificador = response.Contents[0].identificador;
@@ -113,7 +114,7 @@ var SchedulingPage = (function () {
         if (this.globalServices.loginTipo == 'Gestor' || this.globalServices.loginTipo == 'Master') {
             this.action = 'edit';
             this.disableScheduling = true;
-            this.visibleDiagnostic = true;
+            this.disableDiagnostic = false;
         }
         this.schedulingForm = this.formBuilder.group({
             "identificador": [""],
@@ -131,6 +132,11 @@ var SchedulingPage = (function () {
     SchedulingPage.prototype.submit = function () {
         var _this = this;
         if (this.action == 'edit') {
+            this.schedulingService.edit(this.schedulingForm.value)
+                .subscribe(function (result) {
+                _this.responseData = result;
+                _this.message(result.Success, result.Message);
+            });
         }
         else {
             this.schedulingService.register(this.schedulingForm.value)
@@ -149,7 +155,7 @@ var SchedulingPage = (function () {
                 ? "Registrado com sucesso!"
                 : message,
             buttons: [{
-                    text: 'Yes',
+                    text: 'Sim',
                     handler: function (data) {
                         if (success == true)
                             _this.navCtrl.pop();
@@ -162,12 +168,17 @@ var SchedulingPage = (function () {
 }());
 SchedulingPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-scheduling',template:/*ion-inline-start:"C:\Users\Davidson\dev\GIT\IonicApp_DAD\src\pages\scheduling\scheduling.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Agendamento</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <form [formGroup]="schedulingForm" (ngSubmit)="submit();">\n\n    <ion-input type="hidden" formControlName="identificador" [(ngModel)]="identificador" value="0"></ion-input>\n    <ion-input type="hidden" formControlName="usuarioCpf" [(ngModel)]="usuarioCpf"></ion-input>\n\n    <ion-list>\n\n      <ion-item>\n            <ion-label> Proprietário: {{proprietario}} </ion-label>\n      </ion-item>\n\n      <ion-item>\n        <ion-label floating>Animal</ion-label>\n        <ion-input type="text" [disabled]="disableScheduling"\n          formControlName="animal" [(ngModel)]="animal"></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <ion-label floating>Data</ion-label>\n        <ion-datetime displayFormat="DD/MM/YYYY HH:MM" [disabled]="disableScheduling"\n          formControlName="data" min="2017" max="2019-01-01" [(ngModel)]="data"></ion-datetime>\n      </ion-item>\n\n      <ion-item *ngIf="visibleDiagnostic">\n        <ion-label floating>Diagnóstico</ion-label>\n        <ion-input type="text"\n        formControlName="diagnostico" [(ngModel)]="diagnostico"></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <button ion-button full default type="submit" [disabled]="!schedulingForm.valid">Salvar</button>        \n        <button ion-button full default (click)="cleanForm()">Limpar</button>\n      </ion-item>\n\n    </ion-list>\n  </form>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Davidson\dev\GIT\IonicApp_DAD\src\pages\scheduling\scheduling.html"*/,
+        selector: 'page-scheduling',template:/*ion-inline-start:"C:\Users\Davidson\dev\GIT\IonicApp_DAD\src\pages\scheduling\scheduling.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Agendamento</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <form [formGroup]="schedulingForm" (ngSubmit)="submit();">\n\n    <ion-input type="hidden" formControlName="identificador" [(ngModel)]="identificador" value="0"></ion-input>\n    <ion-input type="hidden" formControlName="usuarioCpf" [(ngModel)]="usuarioCpf"></ion-input>\n\n    <ion-list>\n\n      <ion-item>\n            <ion-label> Proprietário: {{proprietario}} </ion-label>\n      </ion-item>\n\n      <ion-item>\n        <ion-label floating>Animal</ion-label>\n        <ion-input type="text" [disabled]="disableScheduling"\n          formControlName="animal" [(ngModel)]="animal"></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <ion-label floating>Data</ion-label>\n        <ion-datetime displayFormat="DD/MM/YYYY HH:MM" [disabled]="disableScheduling"\n          formControlName="data" min="2017" max="2019-01-01" [(ngModel)]="data"></ion-datetime>\n      </ion-item>\n\n      <ion-item>\n        <ion-label floating>Diagnóstico</ion-label>\n        <ion-input type="text" [disabled]="disableDiagnostic"\n        formControlName="diagnostico" [(ngModel)]="diagnostico"></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <button ion-button full default type="submit" [disabled]="!schedulingForm.valid">Salvar</button>        \n        <button ion-button full default *ngIf="action==\'register\'" (click)="cleanForm()">Limpar</button>\n      </ion-item>\n\n    </ion-list>\n  </form>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Davidson\dev\GIT\IonicApp_DAD\src\pages\scheduling\scheduling.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__providers_global_service__["a" /* GlobalService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_global_service__["a" /* GlobalService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5__providers_usuario_service__["a" /* UsuarioService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_usuario_service__["a" /* UsuarioService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_4__providers_scheduling_service__["a" /* SchedulingService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_scheduling_service__["a" /* SchedulingService */]) === "function" && _g || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_3__providers_global_service__["a" /* GlobalService */],
+        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormBuilder"],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_5__providers_usuario_service__["a" /* UsuarioService */],
+        __WEBPACK_IMPORTED_MODULE_4__providers_scheduling_service__["a" /* SchedulingService */]])
 ], SchedulingPage);
 
-var _a, _b, _c, _d, _e, _f, _g;
 //# sourceMappingURL=scheduling.js.map
 
 /***/ }),
@@ -214,42 +225,36 @@ var SchedulingService = (function () {
         headers.append('Access-Control-Allow-Origin', '*');
         this._options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
     }
-    //Cadastra usuario
+    //Cadastra consulta
     SchedulingService.prototype.register = function (agendamento) {
         return this._http.post(this._loginUrl + '/Agendar', JSON.stringify(agendamento), this._options)
             .map(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    //busca o usuario pelo cpf
+    //busca todas as consultas
     SchedulingService.prototype.searchAll = function () {
         return this._http.get(this._loginUrl + '/Todos', this._options)
             .map(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    //busca o usuario pelo cpf
+    //busca as consultas pelo identificador
     SchedulingService.prototype.search = function (identificador) {
         return this._http.get(this._loginUrl + '/FiltrarId/' + identificador, this._options)
             .map(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    // //edita usuario
-    // edit(usuario: IScheduling): Observable<IResponseDTO> {
-    //     return this._http.put(this._loginUrl +'/Editar/' + usuario.cpf , JSON.stringify(usuario), this._options)      
-    //         .map((response: Response)=> response.json())
-    //         .catch(this.handleError);
-    // }
-    // //busca o usuario pelo cpf
-    // search(cpf: string) : Observable<IResponseDTO> {
-    //     return this._http.get(this._loginUrl + '/Filtrar/' + cpf, this._options)      
-    //     .map((response: Response)=> response.json())
-    //     .catch(this.handleError);
-    // }
-    // //Executa o envio de email da senha
-    // rememberPassword(cpf: string) : Observable<IResponseDTO> {
-    //     return this._http.get(this._loginUrl + '/LembrarSenha/' + cpf, this._options)      
-    //     .map((response: Response)=> response.json())
-    //     .catch(this.handleError);
-    // }
+    //busca as consultas pelo cpf
+    SchedulingService.prototype.searchByUser = function (usuarioCpf) {
+        return this._http.get(this._loginUrl + '/Filtrar/' + usuarioCpf, this._options)
+            .map(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    //edita consulta
+    SchedulingService.prototype.edit = function (scheduling) {
+        return this._http.put(this._loginUrl + '/Diagnosticar/', JSON.stringify(scheduling), this._options)
+            .map(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
     //apresenta um erro caso houver
     SchedulingService.prototype.handleError = function (error) {
         console.error(error);
@@ -477,22 +482,37 @@ var CallPage = (function () {
         this.scheduleService = scheduleService;
         this.usuarioService = usuarioService;
         this.calls = [];
-        this.scheduleService.searchAll()
-            .subscribe(function (response) {
-            if (response.Contents.length == 0)
-                _this.message(true, 'Não há consultas pendentes');
-            for (var i = 0; i < response.Contents.length; i++) {
-                _this.calls.push({
-                    identificador: response.Contents[i].identificador,
-                    data: response.Contents[i].data,
-                    animal: response.Contents[i].animal,
-                    diagnostico: response.Contents[i].diagnostico,
-                    usuarioCpf: response.Contents[i].usuarioCpf,
-                    proprietario: response.Contents[i].proprietario
-                });
-            }
-        });
+        if (this.globalServices.loginTipo == 'Gestor' || this.globalServices.loginTipo == 'Master') {
+            this.labelLink = 'Atender';
+            this.scheduleService.searchAll()
+                .subscribe(function (response) {
+                if (response.Contents.length == 0)
+                    _this.message(true, 'Não há consultas pendentes');
+                _this.amountList(response.Contents);
+            });
+        }
+        else {
+            this.labelLink = 'Detalhes';
+            this.scheduleService.searchByUser(this.globalServices.loginCpf)
+                .subscribe(function (response) {
+                if (response.Contents.length == 0)
+                    _this.message(true, 'Não há consultas pendentes');
+                _this.amountList(response.Contents);
+            });
+        }
     }
+    CallPage.prototype.amountList = function (calls) {
+        for (var i = 0; i < calls.length; i++) {
+            this.calls.push({
+                identificador: calls[i].identificador,
+                data: calls[i].data,
+                animal: calls[i].animal,
+                diagnostico: calls[i].diagnostico,
+                usuarioCpf: calls[i].usuarioCpf,
+                proprietario: calls[i].proprietario
+            });
+        }
+    };
     //exibe o alerta para o cliente
     CallPage.prototype.message = function (success, message) {
         var _this = this;
@@ -516,7 +536,7 @@ var CallPage = (function () {
 }());
 CallPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-call',template:/*ion-inline-start:"C:\Users\Davidson\dev\GIT\IonicApp_DAD\src\pages\call\call.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Consultas Pendentes</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n  <ion-list>\n    <ion-item *ngFor="let call of calls">\n      <h2>{{call.proprietario}}</h2>({{call.animal}})\n      <p>{{call.data}}</p>\n      <button ion-button clear item-end (click)="openConsult(call.identificador)"> Atender </button>\n    </ion-item>\n  </ion-list>\n  \n</ion-content>'/*ion-inline-end:"C:\Users\Davidson\dev\GIT\IonicApp_DAD\src\pages\call\call.html"*/,
+        selector: 'page-call',template:/*ion-inline-start:"C:\Users\Davidson\dev\GIT\IonicApp_DAD\src\pages\call\call.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Consultas</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n  <ion-list>\n    <ion-item *ngFor="let call of calls">\n      <h2>{{call.proprietario}}</h2>({{call.animal}})\n      <p>{{call.data}}</p>\n      <button ion-button clear item-end (click)="openConsult(call.identificador)"> {{labelLink}} </button>\n    </ion-item>\n  </ion-list>\n  \n</ion-content>'/*ion-inline-end:"C:\Users\Davidson\dev\GIT\IonicApp_DAD\src\pages\call\call.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
@@ -727,15 +747,17 @@ var TrabalhoSDApp = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Nav */]),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Nav */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Nav */]) === "function" && _a || Object)
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Nav */])
 ], TrabalhoSDApp.prototype, "nav", void 0);
 TrabalhoSDApp = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\Davidson\dev\GIT\IonicApp_DAD\src\app\app.html"*/'<ion-menu [content]="content">\n\n  <ion-header>\n\n    <ion-toolbar>\n\n      <ion-title>Menu</ion-title>\n\n    </ion-toolbar>\n\n  </ion-header>\n\n\n\n  <ion-content>\n\n    <ion-list>\n\n      <button menuClose ion-item *ngFor="let p of getMenuAuthorized()" (click)="openPage(p)">\n\n        {{p.title}}\n\n      </button>\n\n    </ion-list>\n\n  </ion-content>\n\n\n\n</ion-menu>\n\n\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"C:\Users\Davidson\dev\GIT\IonicApp_DAD\src\app\app.html"*/
     }),
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_9__providers_global_service__["a" /* GlobalService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__providers_global_service__["a" /* GlobalService */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */],
+        __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */],
+        __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
+        __WEBPACK_IMPORTED_MODULE_9__providers_global_service__["a" /* GlobalService */]])
 ], TrabalhoSDApp);
 
-var _a, _b, _c, _d, _e;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
@@ -968,6 +990,8 @@ var UserRegisterPage = (function () {
         this.action = 'register';
         this.menuController.swipeEnable(false);
         this.tipo = this.navParams.get("tipo");
+        if (this.navParams.get("tipo") == 'Master')
+            this.tipo = 'Gestor';
         if (this.navParams.get("cpf") !== undefined) {
             this.cpf = this.navParams.get("cpf");
             this.action = 'edit';
@@ -978,7 +1002,7 @@ var UserRegisterPage = (function () {
             "nome": ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required],
             "email": ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required],
             "senha": ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required],
-            "tipo": ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["Validators"].required]
+            "tipo": [this.tipo]
         });
     }
     //limpar o formulário

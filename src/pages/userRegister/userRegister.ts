@@ -33,6 +33,9 @@ export class UserRegisterPage implements IUsuario {
         this.menuController.swipeEnable(false);
         this.tipo = this.navParams.get("tipo");
 
+        if(this.navParams.get("tipo") == 'Master')
+            this.tipo = 'Gestor';
+
         if (this.navParams.get("cpf") !== undefined) {
             this.cpf = this.navParams.get("cpf");
             this.action = 'edit';
@@ -44,8 +47,8 @@ export class UserRegisterPage implements IUsuario {
             "nome": ["", Validators.required],
             "email": ["", Validators.required],
             "senha": ["", Validators.required],
-            "tipo": ["", Validators.required]
-        });
+            "tipo": [this.tipo]
+        });        
     }
 
     //limpar o formulário

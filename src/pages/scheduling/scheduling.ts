@@ -26,7 +26,7 @@ export class SchedulingPage implements IScheduling {
   action: string = 'register';
 
   disableScheduling : boolean = false;
-  visibleDiagnostic : boolean = false;
+  disableDiagnostic : boolean = true;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -40,6 +40,7 @@ export class SchedulingPage implements IScheduling {
 
     if(this.navParams.get('id') !== undefined)
     {
+      this.action = 'edit';
       this.schedulingService.search(this.navParams.get('id'))
       .subscribe((response : IResponseDTO)=> {
         this.identificador = response.Contents[0].identificador;
@@ -60,7 +61,7 @@ export class SchedulingPage implements IScheduling {
     {
       this.action = 'edit';
       this.disableScheduling = true;
-      this.visibleDiagnostic = true;
+      this.disableDiagnostic = false;
     }
 
     this.schedulingForm = this.formBuilder.group({
@@ -81,7 +82,11 @@ export class SchedulingPage implements IScheduling {
   submit(): void {
     if(this.action == 'edit')
     {
-
+      this.schedulingService.edit(this.schedulingForm.value)
+      .subscribe((result: IResponseDTO) => {
+        this.responseData = result;
+        this.message(result.Success, result.Message);
+      });
     }
     else{
       this.schedulingService.register(this.schedulingForm.value)
@@ -100,7 +105,7 @@ export class SchedulingPage implements IScheduling {
         ? "Registrado com sucesso!"
         : message,
       buttons: [{
-        text: 'Yes',
+        text: 'Sim',
         handler: data => {
           if (success == true)
             this.navCtrl.pop();

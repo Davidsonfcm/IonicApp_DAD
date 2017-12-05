@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Consultas Pendentes</ion-title>
+    <ion-title>Consultas</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -10,7 +10,7 @@
     <ion-item *ngFor="let call of calls">
       <h2>{{call.proprietario}}</h2>({{call.animal}})
       <p>{{call.data}}</p>
-      <button ion-button clear item-end (click)="openConsult(call.identificador)"> Atender </button>
+      <button ion-button clear item-end (click)="openConsult(call.identificador)"> {{labelLink}} </button>
     </ion-item>
   </ion-list>
   

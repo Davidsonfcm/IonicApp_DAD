@@ -15,32 +15,53 @@ import { SchedulingPage } from '../scheduling/scheduling';
 })
 export class CallPage {
   calls: ICall[] = [];
+  labelLink : string;
 
   constructor(public alertController: AlertController,
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public globalServices: GlobalService,
     public scheduleService: SchedulingService,
     public usuarioService: UsuarioService) {
 
-      this.scheduleService.searchAll()
-      .subscribe((response : IResponseDTO) => {
+    if (this.globalServices.loginTipo == 'Gestor' || this.globalServices.loginTipo == 'Master') {
 
-        if(response.Contents.length == 0)
+      this.labelLink = 'Atender';
+      this.scheduleService.searchAll()
+      .subscribe((response: IResponseDTO) => {
+
+        if (response.Contents.length == 0)
           this.message(true, 'Não há consultas pendentes');
-      
-        for(var i =0; i < response.Contents.length; i++)
-        {
-          this.calls.push({
-            identificador: response.Contents[i].identificador,
-            data: response.Contents[i].data,
-            animal: response.Contents[i].animal,
-            diagnostico: response.Contents[i].diagnostico,
-            usuarioCpf: response.Contents[i].usuarioCpf,
-            proprietario: response.Contents[i].proprietario
-          });
-        }  
+
+        this.amountList(response.Contents);
       });
+    }
+    else{
+      this.labelLink = 'Detalhes';
+      this.scheduleService.searchByUser(this.globalServices.loginCpf)
+      .subscribe((response: IResponseDTO) => {
+
+        if (response.Contents.length == 0)
+          this.message(true, 'Não há consultas pendentes');
+
+        this.amountList(response.Contents);
+      });
+    }
+    
+  }
+
+
+  amountList(calls: any[]): void {
+    for (var i = 0; i < calls.length; i++) {
+      this.calls.push({
+        identificador: calls[i].identificador,
+        data: calls[i].data,
+        animal: calls[i].animal,
+        diagnostico: calls[i].diagnostico,
+        usuarioCpf: calls[i].usuarioCpf,
+        proprietario: calls[i].proprietario
+      });
+    }
   }
 
   //exibe o alerta para o cliente
@@ -59,9 +80,8 @@ export class CallPage {
     alert.present();
   }
 
-  openConsult(identificador : number) : void
-  {
-    this.navCtrl.push(SchedulingPage, { id : identificador})
+  openConsult(identificador: number): void {
+    this.navCtrl.push(SchedulingPage, { id: identificador })
   }
 
 }

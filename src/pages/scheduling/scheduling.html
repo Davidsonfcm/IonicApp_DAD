@@ -28,15 +28,15 @@
           formControlName="data" min="2017" max="2019-01-01" [(ngModel)]="data"></ion-datetime>
       </ion-item>
 
-      <ion-item *ngIf="visibleDiagnostic">
+      <ion-item>
         <ion-label floating>Diagnóstico</ion-label>
-        <ion-input type="text"
+        <ion-input type="text" [disabled]="disableDiagnostic"
         formControlName="diagnostico" [(ngModel)]="diagnostico"></ion-input>
       </ion-item>
 
       <ion-item>
         <button ion-button full default type="submit" [disabled]="!schedulingForm.valid">Salvar</button>        
-        <button ion-button full default (click)="cleanForm()">Limpar</button>
+        <button ion-button full default *ngIf="action=='register'" (click)="cleanForm()">Limpar</button>
       </ion-item>
 
     </ion-list>
